@@ -69,12 +69,12 @@
         }
 
         .love-gif {
-            width: 50%;
-            max-width: 500px;
+            width: 40%;       /* smaller for laptops */
+            max-width: 400px;
             border-radius: 20px;
         }
 
-        /* YES container always centered */
+        /* YES container centered & responsive */
         #yesContainer {
             position: fixed;
             top: 50%;
@@ -82,7 +82,15 @@
             transform: translate(-50%, -50%);
             text-align: center;
             z-index: 10;
-            display: none; /* hidden until Yes clicked */
+            display: none;
+            max-width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
         }
     </style>
 </head>
@@ -102,7 +110,7 @@
 
 <canvas id="fireworks"></canvas>
 
-<!-- Dedicated container for Yes content -->
+<!-- YES content container -->
 <div id="yesContainer">
     <div class="typing" id="typingText"></div>
     <p>You are officially stuck with Varad forever 🤭💍</p>
@@ -116,14 +124,9 @@ function yesClicked() {
         document.body.addEventListener('click', () => music.play(), {once:true});
     });
 
-    // Show YES container
     const container = document.getElementById("yesContainer");
     container.style.display = "flex";
-    container.style.flexDirection = "column";
-    container.style.alignItems = "center";
-    container.style.justifyContent = "center";
 
-    // Start typing, fireworks, and floating emojis
     typeText("Akshu… ❤️");
     startFireworks();
     startFloating();
