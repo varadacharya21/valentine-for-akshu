@@ -4,8 +4,9 @@
     <title>For Akshu ❤️</title>
     <style>
         body {
-            text-align: center;
+            margin: 0;
             font-family: Arial, sans-serif;
+            text-align: center;
             background: linear-gradient(45deg, #ff758c, #ff7eb3);
             height: 100vh;
             overflow: hidden;
@@ -33,7 +34,13 @@
         #yes { background: #ff2e63; color: white; }
         #no  { background: #555; color: white; position: absolute; }
 
-        canvas { position: fixed; top:0; left:0; pointer-events: none; }
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 1; /* fireworks behind content */
+        }
 
         .floating {
             position: fixed;
@@ -61,6 +68,11 @@
             margin-top: 20px;
             border-radius: 20px;
         }
+
+        #yesContent {
+            position: relative;
+            z-index: 10; /* content stays on top of fireworks */
+        }
     </style>
 </head>
 <body>
@@ -82,14 +94,17 @@
 <script>
 function yesClicked() {
     const music = document.getElementById("bgMusic");
-    music.play(); // starts music on click
+    music.play().catch(() => {
+        // fallback if autoplay blocked
+        document.body.addEventListener('click', () => music.play(), {once:true});
+    });
 
-    document.body.innerHTML = `
-        <div style="margin-top:20%">
+    // Only replace the main content, keep canvas
+    document.body.innerHTML += `
+        <div id="yesContent">
             <div class="typing" id="typingText"></div>
             <p>You are officially stuck with Varad forever 🤭💍</p>
             <img src="love.gif" alt="Love GIF" class="love-gif">
-            <canvas id="fireworks"></canvas>
         </div>
     `;
 
