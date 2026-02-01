@@ -69,28 +69,32 @@
         }
 
         .love-gif {
-            width: 40%;       /* smaller for laptops */
+            width: 40%;
             max-width: 400px;
             border-radius: 20px;
         }
 
-        /* YES container centered & responsive */
+        /* YES container centered & hidden initially */
         #yesContainer {
+            display: none; /* HIDDEN until Yes clicked */
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             text-align: center;
             z-index: 10;
-            display: none;
             max-width: 90%;
             max-height: 90vh;
             overflow-y: auto;
-            display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             gap: 20px;
+        }
+
+        /* Make YES container flex only when shown */
+        #yesContainer.show {
+            display: flex;
         }
     </style>
 </head>
@@ -125,7 +129,7 @@ function yesClicked() {
     });
 
     const container = document.getElementById("yesContainer");
-    container.style.display = "flex";
+    container.classList.add("show"); // SHOW container only on click
 
     typeText("Akshu… ❤️");
     startFireworks();
