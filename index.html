@@ -7,24 +7,22 @@
             margin: 0;
             font-family: Arial, sans-serif;
             background: linear-gradient(45deg, #ff758c, #ff7eb3);
-            height: 100vh;
             overflow: hidden;
             color: white;
+            height: 100vh;
         }
 
-        h1 { 
-            text-align: center; 
-            margin-top: 10%; 
-            font-size: 36px; 
+        h1 {
+            text-align: center;
+            margin-top: 10%;
+            font-size: 36px;
         }
 
         img.main-photo {
             width: 220px;
             border-radius: 20px;
-            margin: 20px 0;
             display: block;
-            margin-left: auto;
-            margin-right: auto;
+            margin: 20px auto;
             box-shadow: 0 0 20px rgba(0,0,0,0.3);
         }
 
@@ -40,12 +38,12 @@
         #yes { background: #ff2e63; color: white; }
         #no  { background: #555; color: white; position: absolute; }
 
-        canvas {
+        canvas#fireworks {
             position: fixed;
             top: 0;
             left: 0;
             pointer-events: none;
-            z-index: 1; /* fireworks behind content */
+            z-index: 1;
         }
 
         .floating {
@@ -67,24 +65,24 @@
             white-space: nowrap;
             overflow: hidden;
             text-align: center;
+            margin-bottom: 20px;
         }
 
         .love-gif {
             width: 50%;
             max-width: 500px;
-            margin-top: 20px;
             border-radius: 20px;
         }
 
-        #yesContent {
-            position: relative;
-            z-index: 10; 
-            display: flex;
-            flex-direction: column;
-            justify-content: center; /* vertical center */
-            align-items: center;    /* horizontal center */
-            height: 100vh;
+        /* YES container always centered */
+        #yesContainer {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             text-align: center;
+            z-index: 10;
+            display: none; /* hidden until Yes clicked */
         }
     </style>
 </head>
@@ -104,6 +102,13 @@
 
 <canvas id="fireworks"></canvas>
 
+<!-- Dedicated container for Yes content -->
+<div id="yesContainer">
+    <div class="typing" id="typingText"></div>
+    <p>You are officially stuck with Varad forever 🤭💍</p>
+    <img src="love.gif" alt="Love GIF" class="love-gif">
+</div>
+
 <script>
 function yesClicked() {
     const music = document.getElementById("bgMusic");
@@ -111,15 +116,14 @@ function yesClicked() {
         document.body.addEventListener('click', () => music.play(), {once:true});
     });
 
-    // Append yesContent without removing canvas
-    document.body.innerHTML += `
-        <div id="yesContent">
-            <div class="typing" id="typingText"></div>
-            <p>You are officially stuck with Varad forever 🤭💍</p>
-            <img src="love.gif" alt="Love GIF" class="love-gif">
-        </div>
-    `;
+    // Show YES container
+    const container = document.getElementById("yesContainer");
+    container.style.display = "flex";
+    container.style.flexDirection = "column";
+    container.style.alignItems = "center";
+    container.style.justifyContent = "center";
 
+    // Start typing, fireworks, and floating emojis
     typeText("Akshu… ❤️");
     startFireworks();
     startFloating();
